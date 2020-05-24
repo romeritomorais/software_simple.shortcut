@@ -15,6 +15,12 @@ Syntax highlighted code block
 ## Header 2
 ### Header 3
 
+`` javascript
+if (isAwesome) {
+  retornar verdadeiro
+}
+`` ``
+
 - Bulleted
 - List
 
