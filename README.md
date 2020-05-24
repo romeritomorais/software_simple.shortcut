@@ -1,9 +1,9 @@
 ```
-{---------------------------------------------------------------------------
- + Esse código foi escrito por romerito morais no RAD Studio Delphi Rio 10.3.3
- + https://www.linkedin.com/in/romeritomorais
- + maio de 2020
----------------------------------------------------------------------------}
+{ ---------------------------------------------------------------------------
+  + Esse código foi escrito por romerito morais no RAD Studio Delphi Rio 10.3.3
+  + https://www.linkedin.com/in/romeritomorais
+  + maio de 2020
+  --------------------------------------------------------------------------- }
 
 unit UnitPrincipal;
 
@@ -71,8 +71,8 @@ implementation
 uses Linux.Utils;
 
 var
-  Cmd: String;
-  CmdResult: TStringList;
+  Text: String;
+  LinuxcmdLine: TStringList;
 
 procedure TFMXPrincipal.Button_procurarClick(Sender: TObject);
 begin
@@ -84,8 +84,8 @@ end;
 
 procedure TFMXPrincipal.Button_salvarClick(Sender: TObject);
 begin
-  Cmd := 'cd $HOME; pwd';
-  CmdResult := TLinuxUtils.RunCommandLine(Cmd);
+  Text := 'cd $HOME; pwd';
+  LinuxcmdLine := TLinuxUtils.RunCommandLine(Text);
 
   if DlgImage.FileName = '' then
   begin
@@ -93,12 +93,12 @@ begin
   end
   else
   begin
-    Cmd := 'echo -e "[Desktop Entry]\nComment=\nExec=' + Edit_command.Text +
+    Text := 'echo -e "[Desktop Entry]\nComment=\nExec=' + Edit_command.Text +
       '\nIcon=' + DlgImage.FileName + '\nName=' + Edit_nome.Text +
       '\nTerminal=0\nCategories=' + Combo_categoria.Text +
       '" >> ~/.local/share/applications/' + Edit_nome.Text.LowerCase
       (Edit_nome.Text) + '.desktop';
-    CmdResult := TLinuxUtils.RunCommandLine(Cmd);
+    LinuxcmdLine := TLinuxUtils.RunCommandLine(Text);
   end;
 
   if Combo_categoria.Text = 'Categoria' then
@@ -108,12 +108,12 @@ end;
 
 procedure TFMXPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  CmdResult.Free;
+  LinuxcmdLine.Free;
 end;
 
 procedure TFMXPrincipal.FormCreate(Sender: TObject);
 begin
-  CmdResult := TStringList.Create;
+  LinuxcmdLine := TStringList.Create;
 end;
 
 procedure TFMXPrincipal.FormShow(Sender: TObject);
