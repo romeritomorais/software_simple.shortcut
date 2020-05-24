@@ -1,10 +1,9 @@
-{---------------------------------------------------------------------------
+{ ---------------------------------------------------------------------------
+  + Esse código foi escrito por romerito morais no RAD Studio Delphi Rio 10.3.3
 
- + Esse código foi escrito por romerito morais no RAD Studio Delphi Rio 10.3.3
-
- + https://www.linkedin.com/in/romeritomorais
- + maio de 2020
----------------------------------------------------------------------------}
+  + https://www.linkedin.com/in/romeritomorais
+  + maio de 2020
+  --------------------------------------------------------------------------- }
 
 unit Linux.Utils;
 
@@ -28,8 +27,6 @@ type
   public
     class function RunCommandLine(const ACommand: string): TStringList;
       overload;
-    class function RunCommandLine(const ACommand: string; Return: TProc<String>)
-      : boolean; overload;
   end;
 
 function popen(const command: MarshaledAString; const _type: MarshaledAString)
@@ -63,32 +60,6 @@ begin
   except
     on E: Exception do
       Result.Add(E.ClassName + ': ' + E.Message);
-  end;
-end;
-
-class function TLinuxUtils.RunCommandLine(const ACommand: string;
-  Return: TProc<string>): boolean;
-var
-  Handle: TStreamHandle;
-  Data: array [0 .. 511] of uint8;
-  M: TMarshaller;
-
-begin
-  Result := False;
-  try
-    Handle := popen(M.AsAnsi(PWideChar(ACommand)).ToPointer, 'r');
-    try
-      while fgets(@Data[0], Sizeof(Data), Handle) <> nil do
-      begin
-        Return(Copy(UTF8ToString(@Data[0]), 1, UTF8ToString(@Data[0])
-          .Length - 1));
-      end;
-    finally
-      pclose(Handle);
-    end;
-  except
-    on E: Exception do
-      Return(E.ClassName + ': ' + E.Message);
   end;
 end;
 
