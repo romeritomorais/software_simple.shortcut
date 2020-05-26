@@ -1,10 +1,10 @@
-{ ---------------------------------------------------------------------------
-
-  + Esse código foi escrito por romerito morais no RAD Studio Delphi Rio 10.3.3
-
-  + https://www.linkedin.com/in/romeritomorais
-  + maio de 2020
-  --------------------------------------------------------------------------- }
+{
+-----------------------------------------------------------------------------
++ Esse código foi escrito por romerito morais no RAD Studio Delphi Rio 10.3.3
++ https://www.linkedin.com/in/romeritomorais
++ maio de 2020
+-----------------------------------------------------------------------------
+}
 
 unit UnitPrincipal;
 
@@ -38,8 +38,6 @@ type
     Rectangle3: TRectangle;
     SearchEditButton1: TSearchEditButton;
     RectangleSobre: TRectangle;
-    MenuBar1: TMenuBar;
-    mSobre: TMenuItem;
     Rectangle4: TRectangle;
     Label3: TLabel;
     Label2: TLabel;
@@ -53,19 +51,20 @@ type
     Text2: TText;
     Label1: TLabel;
     ShadowEffect2: TShadowEffect;
-    Item: TMenuItem;
     ShadowEffect3: TShadowEffect;
     ShadowEffect4: TShadowEffect;
+    ShadowEffect5: TShadowEffect;
+    Image1: TImage;
+    Text3: TText;
     procedure IconClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Button_procurarClick(Sender: TObject);
-    procedure Button_salvarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RectangleSobreClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure TextSalvarClick(Sender: TObject);
     procedure Text1Click(Sender: TObject);
-    procedure ItemClick(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -94,19 +93,14 @@ begin
   Edit_command.selstart := Length(Edit_command.Text);
 end;
 
-procedure TFMXPrincipal.Button_salvarClick(Sender: TObject);
-begin
-  //
-end;
-
 procedure TFMXPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  LinuxcmdLine.Free;
   Text := '';
+  Edit_nome.Free;
   Dlg_caminho.Free;
+  LinuxcmdLine.Free;
   Edit_command.Free;
   Combo_categoria.Free;
-  Edit_nome.Free;
   FMXPrincipal.Free;
 end;
 
@@ -118,7 +112,7 @@ end;
 procedure TFMXPrincipal.FormShow(Sender: TObject);
 begin
   Combo_categoria.ItemIndex := 1;
-  FMXPrincipal.Caption := 'Simple Shortut';
+  FMXPrincipal.Caption := 'Simple Shortcut';
 end;
 
 procedure TFMXPrincipal.IconClick(Sender: TObject);
@@ -141,7 +135,7 @@ begin
 
 end;
 
-procedure TFMXPrincipal.ItemClick(Sender: TObject);
+procedure TFMXPrincipal.Image1Click(Sender: TObject);
 begin
   FmuxOpenUrl
     (PChar('https://github.com/romeritomorais/software_simple.shortcut'));
@@ -163,7 +157,10 @@ begin
   LinuxcmdLine := TLinuxUtils.RunCommandLine(Text);
 
   if DlgImage.FileName = '' then
-    RectangleMsg.Visible := True
+  begin
+    RectangleMsg.Visible := True;
+    Text2.Text := 'Preencha as informações antes de continuar!'
+  end
   else
   begin
     Text := 'echo -e "[Desktop Entry]\nComment=Atalho criado com o Simple Shortcut\nExec='
@@ -172,11 +169,10 @@ begin
       '" >> ~/.local/share/applications/' + Edit_nome.Text.LowerCase
       (Edit_nome.Text) + '.desktop';
     LinuxcmdLine := TLinuxUtils.RunCommandLine(Text);
+    RectangleMsg.Visible := True;
+    Text2.Text := 'O Atalho do Programa ' + Edit_nome.Text +
+      ' foi criado com Sucesso, Procure agora no seu Menu de Programas'
   end;
-
-  if Combo_categoria.Text = 'Categoria' then
-    Combo_categoria.SetFocus;
-
 end;
 
 end.
