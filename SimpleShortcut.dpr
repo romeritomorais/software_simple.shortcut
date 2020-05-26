@@ -4,7 +4,7 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   UnitPrincipal in 'UnitPrincipal.pas' {FMXPrincipal} ,
-  Linux.Utils in 'LibLinux\Linux.Utils.pas';
+  Linux.Utils in 'Library Linux\Linux.Utils.pas';
 
 {$R *.res}
 
